@@ -47,7 +47,7 @@
             this.FlipCards});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(800, 34);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -57,7 +57,7 @@
             this.LoadCards.Image = ((System.Drawing.Image)(resources.GetObject("LoadCards.Image")));
             this.LoadCards.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.LoadCards.Name = "LoadCards";
-            this.LoadCards.Size = new System.Drawing.Size(105, 33);
+            this.LoadCards.Size = new System.Drawing.Size(105, 29);
             this.LoadCards.Text = "Load Cards";
             this.LoadCards.Click += new System.EventHandler(this.LoadCards_Click);
             // 
@@ -83,13 +83,12 @@
             // 
             // FlipCards
             // 
-            this.FlipCards.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.FlipCards.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.FlipCards.Image = ((System.Drawing.Image)(resources.GetObject("FlipCards.Image")));
             this.FlipCards.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FlipCards.Name = "FlipCards";
-            this.FlipCards.Size = new System.Drawing.Size(44, 33);
+            this.FlipCards.Size = new System.Drawing.Size(34, 29);
             this.FlipCards.Text = "Flip";
-            this.FlipCards.Click += new System.EventHandler(this.FlipCards_Click);
             // 
             // Desk
             // 
@@ -97,6 +96,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Desk";
             this.Text = "Form1";
             this.toolStrip1.ResumeLayout(false);

@@ -152,15 +152,7 @@ namespace CardGame
 
         private void FlipCards_Click(object sender, EventArgs e)
         {
-            if (cardsFlipped == true)
-            {
-                ShowFrontImage();
-            }
-            else
-            {
-                ShowBackImage();
-            }          
-            cardsFlipped = !cardsFlipped;
+
         }
 
         private void ShowFrontImage()
