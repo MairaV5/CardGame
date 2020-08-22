@@ -9,15 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Net.Mime;
+using System.Runtime.InteropServices;
 
 namespace CardGame
 {
     public partial class Desk : Form
     {
+        private bool mouseHold = false;
+        private int deltaX;
+        private int deltaY;
+        private bool cardsFlipped = false;
+
         private string folderPath = null;
         private string[] fileNames = null;
         private Random rand = new Random();
         private List<PictureBox> cards = new List<PictureBox>();
+        private List<string> filePaths = new List<string>();
 
         public Desk()
         {
@@ -57,6 +64,7 @@ namespace CardGame
 
             foreach(var fileName in fileNames)
             {
+                filePaths.Add(fileName);
                 filePictureBox = new PictureBox()
                 {
                     Height = 100,
@@ -66,7 +74,11 @@ namespace CardGame
                     Top = rand.Next(50, 300),
                     Image = Image.FromFile(fileName)
                 };
-                filePictureBox.Click += Card_Click;
+                filePictureBox.MouseDoubleClick += Card_DoubleClick;
+                filePictureBox.MouseDown += Card_MouseDown;
+                filePictureBox.MouseUp += Card_MouseUp;
+                filePictureBox.MouseMove += Card_MouseMove;
+
                 this.Controls.Add(filePictureBox);
                 cards.Add(filePictureBox);
             }
@@ -96,11 +108,76 @@ namespace CardGame
             }
         }
 
-        private void Card_Click(object sender, EventArgs e)
+        private void Card_DoubleClick(object sender, EventArgs e)
         {
+            if (mouseHold)
+            {
+                return;
+            }
             var card = (PictureBox)sender;
             card.Location = new Point(25, 40);
             card.BringToFront();
+        }
+
+        private void Card_MouseDown(object sender, MouseEventArgs e)
+        {
+            var card = (PictureBox)sender;
+            card.BringToFront();
+            if(e.Button == MouseButtons.Left)
+            {
+                mouseHold = true;
+                deltaX = e.X;
+                deltaY = e.Y;
+            }
+        }
+
+        private void Card_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mouseHold = false;
+            }
+        }
+
+        private void Card_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!mouseHold)
+            {
+                return;
+            }
+            var card = (PictureBox)sender;
+            card.Top = e.Y + card.Top - deltaY; 
+            card.Left = e.X + card.Left - deltaX; 
+        }
+
+        private void FlipCards_Click(object sender, EventArgs e)
+        {
+            if (cardsFlipped == true)
+            {
+                ShowFrontImage();
+            }
+            else
+            {
+                ShowBackImage();
+            }          
+            cardsFlipped = !cardsFlipped;
+        }
+
+        private void ShowFrontImage()
+        {
+            for(int i = 0; i < 54; i++)
+            {
+                cards[i].Image = Image.FromFile(filePaths[i]);
+            }
+        }
+
+        private void ShowBackImage()
+        {
+            string backImagePath = @"C:\Users\Ilona\Downloads\Playing Cards\Playing Cards\playing_card_images\back\blue_back.png";
+            foreach (var card in cards)
+            {
+                card.Image = Image.FromFile(backImagePath);
+            }
         }
     }
 }
